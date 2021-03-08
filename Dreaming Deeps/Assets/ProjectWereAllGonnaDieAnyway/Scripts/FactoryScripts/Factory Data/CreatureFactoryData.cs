@@ -27,7 +27,7 @@ namespace WereAllGonnaDieAnywayNew
         public CreatureFactoryData(GameObject actor)
         {
             Creature target = actor.GetComponent<Creature>();
-            Inventory inventory = actor.GetComponent<Inventory>();
+            WereAllGonnaDieAnywayNew.InventorySystem.Inventory inventory = actor.GetComponent<WereAllGonnaDieAnywayNew.InventorySystem.Inventory>();
 
             ActorID = target.CreatureID;
             Statlist = target.Stats.StatList;

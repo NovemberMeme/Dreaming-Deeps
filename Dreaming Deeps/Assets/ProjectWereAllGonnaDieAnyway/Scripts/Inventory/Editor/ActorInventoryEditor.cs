@@ -34,7 +34,7 @@ public class ActorInventoryEditor : Editor
 			EditorFieldUtility.ReadOnlyComponentField(target as MonoBehaviour, this);
 
 			EditorGUILayout.BeginHorizontal();
-			Inventory _target = (Inventory)target;
+			WereAllGonnaDieAnywayNew.InventorySystem.Inventory _target = (WereAllGonnaDieAnywayNew.InventorySystem.Inventory)target;
 			EditorGUILayout.PrefixLabel("Game Data DB");
 			_target.db = EditorGUILayout.ObjectField(_target.db, typeof(GameDatabaseSO), true) as GameDatabaseSO;
 			EditorGUILayout.EndHorizontal();

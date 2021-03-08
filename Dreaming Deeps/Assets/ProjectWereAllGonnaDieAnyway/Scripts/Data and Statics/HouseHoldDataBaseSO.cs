@@ -196,13 +196,13 @@ using WereAllGonnaDieAnywayNew;
 
         // Resource Management
 
-        public void AddItem(Inventory source, int qty, string ItemName)
+        public void AddItem(WereAllGonnaDieAnywayNew.InventorySystem.Inventory source, int qty, string ItemName)
         {
             source.TransferItemData(ItemName, qty, out ItemFactoryData targetItem);
             addItemToStock(targetItem);
         }
 
-        public void ShareItem(Inventory targetInventory, int qty, string ItemName)
+        public void ShareItem(WereAllGonnaDieAnywayNew.InventorySystem.Inventory targetInventory, int qty, string ItemName)
         {
             // transfer item from common to target
         }

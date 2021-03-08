@@ -14,7 +14,7 @@ public class HarvestPointFactoryDataSO : ScriptableObject
     public ResourceSpawnRateSO SpawnRateData;
     public AbundanceDataSO AbundanceData;
 
-    public Inventory HarvestPointInventory;
+    public WereAllGonnaDieAnywayNew.InventorySystem.Inventory HarvestPointInventory;
 
     public void UpdateCrowdedness(HarvestPointFactoryDataSO updatedLocation, float newValue)
     {

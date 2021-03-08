@@ -13,7 +13,7 @@ public class PlayerData : ScriptableObject
     [SerializeField]
     public List<Stat> playerStats = new List<Stat>();
 
-    public void UpdateInventory(Inventory source)
+    public void UpdateInventory(WereAllGonnaDieAnywayNew.InventorySystem.Inventory source)
     {
         playerInventory = TOOLS.CloneObject<List<ItemFactoryData>>(source.ItemsInBag);
     }

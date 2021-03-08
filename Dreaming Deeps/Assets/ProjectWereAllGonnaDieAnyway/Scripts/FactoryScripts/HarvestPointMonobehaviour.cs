@@ -10,11 +10,11 @@ namespace WereAllGonnaDieAnywayNew
     {
         public AbundanceDataSO HarvestPointAbundanceData;
         public ResourceSpawnRateSO SpawnRate;
-        public Inventory HarvestInventory;
+        public WereAllGonnaDieAnywayNew.InventorySystem.Inventory HarvestInventory;
 
         public void InitializeHarvestPoint()
         {
-            HarvestInventory = GetComponent<Inventory>();
+            HarvestInventory = GetComponent<WereAllGonnaDieAnywayNew.InventorySystem.Inventory>();
         }
 
         public void OnPointerClick(PointerEventData eventData)

@@ -35,7 +35,7 @@ public class HarvestPointFactory : IManufacture
 
             GameObject go = Object.Instantiate(data.HarvestpointPrefab);
             HarvestPointMonobehaviour hb = go.GetComponent<HarvestPointMonobehaviour>();
-            hb.HarvestInventory =  go.GetComponent<Inventory>();
+            hb.HarvestInventory =  go.GetComponent<WereAllGonnaDieAnywayNew.InventorySystem.Inventory>();
             hb.HarvestPointAbundanceData = hp.AbundanceData;        
             
             foreach(SpawnRateData itm in hp.SpawnRateData.SpawnRateList)

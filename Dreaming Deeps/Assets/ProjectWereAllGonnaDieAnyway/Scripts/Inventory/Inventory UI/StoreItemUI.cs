@@ -7,7 +7,7 @@ using TMPro;
 public class StoreItemUI : MonoBehaviour
 {
     [SerializeField] GameObject ItembuttonPrefab;
-    [SerializeField] Inventory owner;
+    [SerializeField] WereAllGonnaDieAnywayNew.InventorySystem.Inventory owner;
     [SerializeField] RectTransform content;
     [SerializeField] HouseHoldDataBaseSO HouseHoldDB;
     

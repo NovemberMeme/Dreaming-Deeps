@@ -125,7 +125,7 @@ namespace WereAllGonnaDieAnywayNew
                 Creature actor = go.GetComponent<Creature>();
                 actor.Type = CREATURE_TYPE.NPC;
                 actor.Stats = new EntityStatHandler(tmp.Statlist);
-                go.GetComponent<Inventory>().ItemsInBag = tmp.ItemsInBag;    
+                go.GetComponent<WereAllGonnaDieAnywayNew.InventorySystem.Inventory>().ItemsInBag = tmp.ItemsInBag;    
                
                 actor.CreatureID = tmp.ActorID;
                 go.name = tmp.Name;
@@ -181,7 +181,7 @@ namespace WereAllGonnaDieAnywayNew
             }else
             {
                 Creature target = actor.GetComponent<Creature>();
-                Inventory inventory = actor.GetComponent<Inventory>();
+                WereAllGonnaDieAnywayNew.InventorySystem.Inventory inventory = actor.GetComponent<WereAllGonnaDieAnywayNew.InventorySystem.Inventory>();
                 tmp.ItemsInBag = inventory.ItemsInBag;
                 tmp.Statlist = target.Stats.StatList;
                 tmp.position = actor.transform.position;
