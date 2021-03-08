@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class BuildingGhost2D : MonoBehaviour {
 
-    private Transform visual;
-    private PlacedObjectTypeSO placedObjectTypeSO;
+    protected Transform visual;
+    protected PlacedObjectTypeSO placedObjectTypeSO;
 
-    private void Start() {
+    protected virtual void Start() {
         RefreshVisual();
 
         GridBuildingSystem2D.Instance.OnSelectedChanged += Instance_OnSelectedChanged;
     }
 
-    private void Instance_OnSelectedChanged(object sender, System.EventArgs e) {
+    protected virtual void Instance_OnSelectedChanged(object sender, System.EventArgs e) {
         RefreshVisual();
     }
 
-    private void LateUpdate() {
+    protected virtual void LateUpdate() {
         Vector3 targetPosition = GridBuildingSystem2D.Instance.GetMouseWorldSnappedPosition();
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 15f);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, GridBuildingSystem2D.Instance.GetPlacedObjectRotation(), Time.deltaTime * 15f);
     }
 
-    private void RefreshVisual() {
+    protected virtual void RefreshVisual() {
         if (visual != null) {
             Destroy(visual.gameObject);
             visual = null;

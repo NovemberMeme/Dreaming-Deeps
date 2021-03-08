@@ -16,11 +16,11 @@ public class PlacedObject_Done : MonoBehaviour {
 
 
 
-    private PlacedObjectTypeSO placedObjectTypeSO;
-    private Vector2Int origin;
-    private PlacedObjectTypeSO.Dir dir;
+    protected PlacedObjectTypeSO placedObjectTypeSO;
+    protected Vector2Int origin;
+    protected PlacedObjectTypeSO.Dir dir;
 
-    private void Setup(PlacedObjectTypeSO placedObjectTypeSO, Vector2Int origin, PlacedObjectTypeSO.Dir dir) {
+    protected void Setup(PlacedObjectTypeSO placedObjectTypeSO, Vector2Int origin, PlacedObjectTypeSO.Dir dir) {
         this.placedObjectTypeSO = placedObjectTypeSO;
         this.origin = origin;
         this.dir = dir;

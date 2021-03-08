@@ -12,12 +12,12 @@ public class GridBuildingSystem2D : MonoBehaviour {
     public event EventHandler OnObjectPlaced;
 
 
-    private Grid<GridObject> grid;
-    [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList = null;
-    private PlacedObjectTypeSO placedObjectTypeSO;
-    private PlacedObjectTypeSO.Dir dir;
+    protected Grid<GridObject> grid;
+    [SerializeField] protected List<PlacedObjectTypeSO> placedObjectTypeSOList = null;
+    protected PlacedObjectTypeSO placedObjectTypeSO;
+    protected PlacedObjectTypeSO.Dir dir;
 
-    private void Awake() {
+    protected virtual void Awake() {
         Instance = this;
 
         int gridWidth = 10;
@@ -30,9 +30,9 @@ public class GridBuildingSystem2D : MonoBehaviour {
 
     public class GridObject {
 
-        private Grid<GridObject> grid;
-        private int x;
-        private int y;
+        protected Grid<GridObject> grid;
+        protected int x;
+        protected int y;
         public PlacedObject_Done placedObject;
 
         public GridObject(Grid<GridObject> grid, int x, int y) {
@@ -66,7 +66,7 @@ public class GridBuildingSystem2D : MonoBehaviour {
 
     }
 
-    private void Update() {
+    protected virtual void Update() {
         if (Input.GetMouseButtonDown(0) && placedObjectTypeSO != null) {
             Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
             grid.GetXY(mousePosition, out int x, out int z);
@@ -132,11 +132,11 @@ public class GridBuildingSystem2D : MonoBehaviour {
         }
     }
 
-    private void DeselectObjectType() {
+    protected void DeselectObjectType() {
         placedObjectTypeSO = null; RefreshSelectedObjectType();
     }
 
-    private void RefreshSelectedObjectType() {
+    protected void RefreshSelectedObjectType() {
         OnSelectedChanged?.Invoke(this, EventArgs.Empty);
     }
 
@@ -146,7 +146,7 @@ public class GridBuildingSystem2D : MonoBehaviour {
         return new Vector2Int(x, z);
     }
 
-    public Vector3 GetMouseWorldSnappedPosition() {
+    public virtual Vector3 GetMouseWorldSnappedPosition() {
         Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
         grid.GetXY(mousePosition, out int x, out int y);
 
@@ -167,7 +167,7 @@ public class GridBuildingSystem2D : MonoBehaviour {
         }
     }
 
-    public PlacedObjectTypeSO GetPlacedObjectTypeSO() {
+    public virtual PlacedObjectTypeSO GetPlacedObjectTypeSO() {
         return placedObjectTypeSO;
     }
 
