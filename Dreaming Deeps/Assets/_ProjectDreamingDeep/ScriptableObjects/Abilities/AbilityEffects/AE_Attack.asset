@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89d3b96f889d0b84183a4092ab0da51c, type: 3}
-  m_Name: LoopPathAspect
+  m_Script: {fileID: 11500000, guid: f89646749f897954b80a0296126d1924, type: 3}
+  m_Name: AE_Attack
   m_EditorClassIdentifier: 
-  VisualsPrefab: {fileID: 6438820267369466253, guid: 797f156bcfcd596418eb2995fe7f168c,
-    type: 3}
+  ExtraEffects: []

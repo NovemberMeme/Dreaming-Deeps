@@ -7,5 +7,11 @@ namespace DreamingDeep
     public class AbilityData
     {
         public int TargetCharIndex;
+
+        public PartyCharacter User;
+        public PartyCharacter Target;
+
+        public float PhysicalDamageAmount;
+        public float MagicalDamageAmount;
     }
 }

@@ -4,19 +4,18 @@ using UnityEngine;
 
 namespace DreamingDeep
 {
-    public enum TargetType
-    {
-        Frontmost,
-        Backmost,
-        LowestStat,
-        HighestStat
-    }
-
     public class Ability : MonoBehaviour
     {
         public AbilityType MyAbilityType;
-        public float AbilityChargeDelay = 5;
+        public float AbilityManacost = 5;
 
-        public TargetType MyTargetType = TargetType.Frontmost;
+        public ITargetType MyTargetType;
+
+        public AbilityEffect MyAbilityEffects;
+
+        public virtual void ApplyAbility(AbilityData _abilityData)
+        {
+            MyAbilityEffects.ApplyEffects(_abilityData);
+        }
     }
 }

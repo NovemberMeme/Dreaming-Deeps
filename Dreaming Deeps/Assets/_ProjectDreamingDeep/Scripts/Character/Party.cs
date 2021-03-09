@@ -9,7 +9,7 @@ namespace DreamingDeep
     {
         public List<PartyCharacter> MyParty = new List<PartyCharacter>();
 
-        public PartyCharacter GetCharacter(int _charIndex)
+        public PartyCharacter GetCharacterByIndex(int _charIndex)
         {
             if(_charIndex >= MyParty.Count)
             {

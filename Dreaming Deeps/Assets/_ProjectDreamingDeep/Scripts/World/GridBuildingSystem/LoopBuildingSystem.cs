@@ -64,6 +64,8 @@ namespace DreamingDeep
 
         [SerializeField] protected TileAspect LoopPathAspect;
 
+        [SerializeField] protected Transform WorldTileParent;
+
         [Header("BuildingSystem Settings: ")]
 
         protected Grid<WorldTileObject> _grid;
@@ -89,7 +91,7 @@ namespace DreamingDeep
 
         protected virtual void InitializeGrid()
         {
-            _grid = new Grid<WorldTileObject>(DB.GridWidth, DB.GridHeight, CellSize, OriginPosition.position, (Grid<WorldTileObject> g, int x, int y) => new WorldTileObject(g, x, y));
+            _grid = new Grid<WorldTileObject>(DB.ShowDebug, DB.GridWidth, DB.GridHeight, CellSize, OriginPosition.position, (Grid<WorldTileObject> g, int x, int y) => new WorldTileObject(g, x, y));
         }
 
         protected virtual void InitializeWorldTiles()
@@ -101,6 +103,8 @@ namespace DreamingDeep
                     PlaceWorldTile(new Vector3(x * CellSize, y * CellSize, 0));
                 }
             }
+
+            //LoadWorldData();
         }
 
         protected virtual void CheckMouseInput()
@@ -113,30 +117,59 @@ namespace DreamingDeep
 
                 //PlaceWorldTile(mousePosition);
             }
+
+            if (Input.GetMouseButtonDown(1) && WorldTileObjectTypeSO != null)
+            {
+                Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
+
+                DeleteTileAspects(mousePosition);
+
+                //PlaceWorldTile(mousePosition);
+            }
+        }
+
+        public virtual void DeleteTileAspects(Vector3 _placePosition)
+        {
+            _grid.GetXY(_placePosition, out int x, out int z);
+
+            if (x > DB.GridWidth || z > DB.GridHeight)
+                return;
+
+            Vector2Int _placedObjectOrigin = new Vector2Int(x, z);
+
+            PlacedObject_WorldTile currentTileObject = _grid.GetGridObject(_placePosition).GetPlacedObject();
+
+            currentTileObject.DeleteAspects();
         }
 
         public virtual void SetTileAspect(TileAspect _tileAspect, Vector3 _placePosition)
         {
             _grid.GetXY(_placePosition, out int x, out int z);
 
+            if (x > DB.GridWidth || z > DB.GridHeight)
+                return;
+
             Vector2Int _placedObjectOrigin = new Vector2Int(x, z);
 
             PlacedObject_WorldTile currentTileObject = _grid.GetGridObject(_placePosition).GetPlacedObject();
-            
-            if(!currentTileObject.MyAspects.Contains(LoopPathAspect))
-                currentTileObject.MyAspects.Add(LoopPathAspect);
+
+            List<TileAspect> newAspects = new List<TileAspect>();
+            newAspects.Add(LoopPathAspect);
+
+            if (!currentTileObject.MyAspects.Contains(LoopPathAspect))
+                currentTileObject.SetTileAspects(newAspects);
         }
 
         public virtual void SaveWorldData()
         {
-            WorldTileData[,] _newWorldSaveData = new WorldTileData[DB.GridWidth, DB.GridHeight];
+            List<WorldTileData> _newWorldSaveData = new List<WorldTileData>();
 
             for (int x = 0; x < DB.GridWidth; x++)
             {
                 for (int y = 0; y < DB.GridHeight; y++)
                 {
-                    _newWorldSaveData[x, y].SavedAspects = 
-                        _grid.GetGridObject(new Vector3(x * CellSize, y * CellSize)).GetPlacedObject().MyAspects;
+                    _newWorldSaveData.Add(
+                        new WorldTileData(_grid.GetGridObject(new Vector3(x * CellSize, y * CellSize)).GetPlacedObject().MyAspects));
                 }
             }
 
@@ -145,12 +178,18 @@ namespace DreamingDeep
 
         public virtual void LoadWorldData()
         {
+            if (DB.WorldTileDatas == null)
+                return;
+
+            int i = 0;
+
             for (int x = 0; x < DB.GridWidth; x++)
             {
                 for (int y = 0; y < DB.GridHeight; y++)
                 {
-                    _grid.GetGridObject(new Vector3(x * CellSize, y * CellSize)).GetPlacedObject().MyAspects =
-                        DB.WorldTileDatas[x, y].SavedAspects;
+                    _grid.GetGridObject(new Vector3(x * CellSize, y * CellSize)).GetPlacedObject().
+                        SetTileAspects(DB.WorldTileDatas[i].SavedAspects);
+                    i++;
                 }
             }
         }
@@ -177,7 +216,7 @@ namespace DreamingDeep
                 Vector2Int rotationOffset = WorldTileObjectTypeSO.GetRotationOffset(dir);
                 Vector3 placedObjectWorldPosition = _grid.GetWorldPosition(x, z) + new Vector3(rotationOffset.x, rotationOffset.y) * _grid.GetCellSize();
 
-                PlacedObject_WorldTile placedObject = PlacedObject_WorldTile.Create(StartingAspects, placedObjectWorldPosition, _placedObjectOrigin, dir, WorldTileObjectTypeSO);
+                PlacedObject_WorldTile placedObject = PlacedObject_WorldTile.Create(WorldTileParent, StartingAspects, placedObjectWorldPosition, _placedObjectOrigin, dir, WorldTileObjectTypeSO);
                 placedObject.transform.rotation = Quaternion.Euler(0, 0, -WorldTileObjectTypeSO.GetRotationAngle(dir));
 
                 foreach (Vector2Int gridPosition in gridPositionList)

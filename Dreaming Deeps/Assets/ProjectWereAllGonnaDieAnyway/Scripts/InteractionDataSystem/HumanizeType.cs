@@ -80,36 +80,36 @@ namespace WereAllGonnaDieAnywayNew
 
         public string HumanizeNewPhrase(float value, STAT_TYPE statType)
         {
-            switch (statType)
-            {
-                case STAT_TYPE.happiness:
-                    for (int i = 0; i < Ranges.Count; i++)
-                    {
-                        if (value <= Ranges[i])
-                        {
-                            return HappinessDescriptions[i];
-                        }
-                    }
-                    break;
-                case STAT_TYPE.hunger:
-                    for (int i = 0; i < Ranges.Count; i++)
-                    {
-                        if (value <= Ranges[i])
-                        {
-                            return HungerDescriptions[i];
-                        }
-                    }
-                    break;
-                case STAT_TYPE.cleanliness:
-                    for (int i = 0; i < Ranges.Count; i++)
-                    {
-                        if (value <= Ranges[i])
-                        {
-                            return CleanlinessDescriptions[i];
-                        }
-                    }
-                    break;
-            }
+            //switch (statType)
+            //{
+            //    case STAT_TYPE.happiness:
+            //        for (int i = 0; i < Ranges.Count; i++)
+            //        {
+            //            if (value <= Ranges[i])
+            //            {
+            //                return HappinessDescriptions[i];
+            //            }
+            //        }
+            //        break;
+            //    case STAT_TYPE.hunger:
+            //        for (int i = 0; i < Ranges.Count; i++)
+            //        {
+            //            if (value <= Ranges[i])
+            //            {
+            //                return HungerDescriptions[i];
+            //            }
+            //        }
+            //        break;
+            //    case STAT_TYPE.cleanliness:
+            //        for (int i = 0; i < Ranges.Count; i++)
+            //        {
+            //            if (value <= Ranges[i])
+            //            {
+            //                return CleanlinessDescriptions[i];
+            //            }
+            //        }
+            //        break;
+            //}
 
             return "I can't compute NewPhrase humanization...";
         }

@@ -123,6 +123,27 @@ public class EntityStatHandler
     }
 
     /// <summary>
+    /// Sets only the Current Value and not the Base Value
+    /// </summary>
+    /// <param name="targetStatType"></param>
+    /// <param name="_modValue"></param>
+
+    public void ModifyCurrentStat(STAT_TYPE targetStatType, float _modValue)
+    {
+        for (int i = 0; i < StatList.Count; i++)
+        {
+            if (StatList[i].statType == targetStatType)
+            {
+
+                StatList[i].CurrentValue += _modValue;
+                Mathf.Clamp(StatList[i].CurrentValue, 0, 100);
+
+
+            }
+        }
+    }
+
+    /// <summary>
     /// Returns Stat from Entity statList, returns null if stat isn't found
     /// </summary>
     /// <param name="targetStatType"></param>

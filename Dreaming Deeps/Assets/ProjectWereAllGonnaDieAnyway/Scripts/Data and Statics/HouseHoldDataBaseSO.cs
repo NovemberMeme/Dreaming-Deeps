@@ -18,10 +18,10 @@ using WereAllGonnaDieAnywayNew;
       
         static Stat[] StatList =
         {
-            new Stat(STAT_TYPE.cleanliness,50),
-            new Stat(STAT_TYPE.happiness,50),
-            new Stat(STAT_TYPE.health,50),
-            new Stat(STAT_TYPE.infection_level,0)
+            //new Stat(STAT_TYPE.cleanliness,50),
+            //new Stat(STAT_TYPE.happiness,50),
+            //new Stat(STAT_TYPE.health,50),
+            //new Stat(STAT_TYPE.infection_level,0)
 
         };
         [SerializeField]

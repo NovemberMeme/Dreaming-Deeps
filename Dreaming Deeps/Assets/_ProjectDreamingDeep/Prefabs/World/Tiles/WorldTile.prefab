@@ -138,7 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9896535f3193144b7c15c91c2382a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VisualsRenderer: {fileID: 7417981438318772771}
+  DefaultVisuals: {fileID: 1818990516081512133, guid: 4ac5de2f84474d14aa45c5b78e6fe564,
+    type: 3}
   myAspects: []
 --- !u!114 &3868159878951263412
 MonoBehaviour:

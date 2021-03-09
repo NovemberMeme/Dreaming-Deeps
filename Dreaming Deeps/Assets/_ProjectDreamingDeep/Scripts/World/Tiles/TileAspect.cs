@@ -7,6 +7,6 @@ namespace DreamingDeep
     [CreateAssetMenu(fileName = "New TileAspect", menuName = "World Tiles/New TileAspect")]
     public class TileAspect : ScriptableObject
     {
-        public Sprite VisualsSprite;
+        public GameObject VisualsPrefab;
     }
 }

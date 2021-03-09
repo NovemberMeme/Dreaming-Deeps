@@ -8,5 +8,10 @@ namespace DreamingDeep
     public class WorldTileData 
     {
         public List<TileAspect> SavedAspects = new List<TileAspect>();
+
+        public WorldTileData(List<TileAspect> _initialAspects)
+        {
+            SavedAspects = _initialAspects;
+        }
     }
 }

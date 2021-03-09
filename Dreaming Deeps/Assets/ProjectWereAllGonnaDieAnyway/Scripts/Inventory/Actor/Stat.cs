@@ -6,21 +6,22 @@ namespace WereAllGonnaDieAnywayNew
 {
     public enum STAT_TYPE
     {
-        workspeed,       
-        movespeed,
-        vision_range,
-        sneeze_chance,
-        affection,
-        health,
-        hunger,
-        happiness,
-        stamina,
-        infection_level,
-        vulnerability,
-        work_difficulty,
-        cleanliness,
-        protection_level
-
+        Health,
+        Power,
+        AttackSpeed,
+        BaseAttackTime,
+        ManaRegen,
+        ManaCost,
+        LifeSteal,
+        Armor,
+        Regen,
+        HealAmpli,
+        MagicResist,
+        SplashDamage,
+        MagicDamage,
+        ThornsDamage,
+        Counter,
+        Evasion,
     }
     [System.Serializable]
     public class Stat
