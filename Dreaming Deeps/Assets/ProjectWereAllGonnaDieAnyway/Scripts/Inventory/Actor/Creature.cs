@@ -15,7 +15,8 @@ namespace WereAllGonnaDieAnywayNew
     }
   
     //everything that can get affected by items is an actor 
-    public  class Creature : MonoBehaviour
+    [System.Serializable]
+    public  class Creature
     {
         public string CharacterName;
         [HideInInspector]
@@ -25,7 +26,9 @@ namespace WereAllGonnaDieAnywayNew
 
         public EntityStatHandler Stats = new EntityStatHandler();
 
-        private void Update()
+        // Make this listen to Tick instead so it's not a monobehavior
+
+        public virtual void UpdateStats(int _tick)
         {
             for (int i = 0; i < Stats.StatList.Count; i++)
             {

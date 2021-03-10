@@ -5,7 +5,7 @@ using UnityEngine;
 namespace DreamingDeep
 {
     [CreateAssetMenu(fileName = "New Regular Ability Response", menuName = "Abilities/New Regular Ability Response")]
-    public class AR_Regular : AbilityResponse
+    public class Response_Regular : AbilityResponse
     {
         public override void CustomResponse(AbilityData _abilityData)
         {

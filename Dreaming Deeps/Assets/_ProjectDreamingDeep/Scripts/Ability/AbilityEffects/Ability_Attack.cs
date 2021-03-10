@@ -5,7 +5,7 @@ using UnityEngine;
 namespace DreamingDeep
 {
     [CreateAssetMenu(fileName = "New Attack Ability Effect", menuName = "Abilities/New Attack Ability Effect")]
-    public class AE_Attack : AbilityEffect
+    public class Ability_Attack : Ability
     {
         public override void ApplyMyCustomEffect(AbilityData _abilityData)
         {
@@ -21,6 +21,8 @@ namespace DreamingDeep
 
             _abilityData.PhysicalDamageAmount = damageAmount;
             _abilityData.MagicalDamageAmount = magicDamageAmount;
+
+            _abilityData.IsSubEffect = IsSubEffect;
 
             _abilityData.Target.GetTargetedByAbilityResponse(_abilityData);
         }

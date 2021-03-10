@@ -34,9 +34,9 @@ namespace WereAllGonnaDieAnywayNew
             ItemsInBag = inventory.ItemsInBag;
             ActorObject = actor;
 
-            SpriteIndex = Int32.Parse(target.transform.GetChild(0).name);
+            SpriteIndex = Int32.Parse(actor.transform.GetChild(0).name);
 
-            Name = target.name;
+            Name = actor.name;
 
             //add location and ai data later
         }

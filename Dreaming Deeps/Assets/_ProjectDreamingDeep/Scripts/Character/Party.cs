@@ -7,16 +7,16 @@ namespace DreamingDeep
     [CreateAssetMenu(fileName = "New Party", menuName = "Adventure/New Party")]
     public class Party : ScriptableObject
     {
-        public List<PartyCharacter> MyParty = new List<PartyCharacter>();
+        public List<PartyCharacter> PartyCharacterList = new List<PartyCharacter>();
 
         public PartyCharacter GetCharacterByIndex(int _charIndex)
         {
-            if(_charIndex >= MyParty.Count)
+            if(_charIndex >= PartyCharacterList.Count)
             {
-                _charIndex = MyParty.Count - 1;
+                _charIndex = PartyCharacterList.Count - 1;
             }
 
-            return MyParty[_charIndex];
+            return PartyCharacterList[_charIndex];
         }
     }
 }

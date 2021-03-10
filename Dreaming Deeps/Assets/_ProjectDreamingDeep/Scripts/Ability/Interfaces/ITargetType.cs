@@ -6,6 +6,6 @@ namespace DreamingDeep
 {
     public interface ITargetType 
     {
-        PartyCharacter GetByTargetType(Party _party);
+        PartyCharacter GetByTargetType(PartyCharacter _user);
     }
 }

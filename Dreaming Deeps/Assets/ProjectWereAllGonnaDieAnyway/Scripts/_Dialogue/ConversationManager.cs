@@ -68,7 +68,7 @@ namespace WereAllGonnaDieAnywayNew
         {
             interactionMenu.SetActive(false);
             conversationMenu.SetActive(true);
-            randomInfoText.text = OtherCreature.GetComponent<Communicator>().CommunicateRandomInfo();
+            //randomInfoText.text = OtherCreature.GetComponent<Communicator>().CommunicateRandomInfo();
             TriggerInfection();
         }
 

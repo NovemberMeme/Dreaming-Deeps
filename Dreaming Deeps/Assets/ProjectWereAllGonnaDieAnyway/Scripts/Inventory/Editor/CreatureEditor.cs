@@ -32,7 +32,7 @@ public class CreatureEditor : Editor
             ////EditorFieldUtility.ReadOnlyComponentField(target as MonoBehaviour, this);
 
 
-            Creature _target = (Creature)target;
+            Creature _target = null;
             base.OnInspectorGUI();
             //EditorGUILayout.BeginHorizontal();
             //EditorGUILayout.PrefixLabel("Character Name");

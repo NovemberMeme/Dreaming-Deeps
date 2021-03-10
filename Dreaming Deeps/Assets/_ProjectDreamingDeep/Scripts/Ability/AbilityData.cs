@@ -13,5 +13,16 @@ namespace DreamingDeep
 
         public float PhysicalDamageAmount;
         public float MagicalDamageAmount;
+
+        public bool IsSubEffect;
+
+        public AbilityData(PartyCharacter _user, PartyCharacter _target, float _physicaldmg, float _magicaldmg, bool _isSubEffect)
+        {
+            User = _user;
+            Target = _target;
+            PhysicalDamageAmount = _physicaldmg;
+            MagicalDamageAmount = _magicaldmg;
+            IsSubEffect = _isSubEffect;
+        }
     }
 }

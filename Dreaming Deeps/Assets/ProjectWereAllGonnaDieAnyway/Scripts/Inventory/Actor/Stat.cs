@@ -10,7 +10,7 @@ namespace WereAllGonnaDieAnywayNew
         Power,
         AttackSpeed,
         BaseAttackTime,
-        ManaRegen,
+        ManaRegenPerSecond,
         ManaCost,
         LifeSteal,
         Armor,

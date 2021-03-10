@@ -91,19 +91,19 @@ using WereAllGonnaDieAnywayNew;
             RuntimeResidentList.Clear();
         }
 
-        public Creature FindRuntimeResident(int id)
-        {
-            for (int i = 0; i < RuntimeResidentList.Count; i++)
-            {
-                if (RuntimeResidentList[i].GetComponent<Creature>().CreatureID == id)
-                {
-                    return RuntimeResidentList[i].GetComponent<Creature>();
-                }
-            }
+        //public Creature FindRuntimeResident(int id)
+        //{
+        //    for (int i = 0; i < RuntimeResidentList.Count; i++)
+        //    {
+        //        if (RuntimeResidentList[i].GetComponent<Creature>().CreatureID == id)
+        //        {
+        //            return RuntimeResidentList[i].GetComponent<Creature>();
+        //        }
+        //    }
 
-            Debug.Log("Resident Not Found");
-            return null;
-        }
+        //    Debug.Log("Resident Not Found");
+        //    return null;
+        //}
 
         //
         public void SetSelectedActor(Creature caller)

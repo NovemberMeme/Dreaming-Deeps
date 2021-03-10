@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ebda75d7ea89214aaae9582a61e7ec7, type: 3}
-  m_Name: AR_Regular
+  m_Script: {fileID: 11500000, guid: fd3c422592081154c91a19d14db4b989, type: 3}
+  m_Name: PlayerParty
   m_EditorClassIdentifier: 
-  ExtraAbilityResponses: []
+  PartyCharacterList: []
