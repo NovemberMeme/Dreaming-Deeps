@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5cd92517b3064f40a2e1d6d4745f329, type: 3}
   m_Name: CombatSystem
   m_EditorClassIdentifier: 
-  PlayerParty: {fileID: 0}
-  MonsterParty: {fileID: 0}
-  AllCharacters: []
+  PlayerParty: {fileID: 11400000, guid: 3de6d5450d9506e478f94497482f47b0, type: 2}
+  MonsterParty: {fileID: 11400000, guid: 2112ab8819198ef40b0eec86aad4bc50, type: 2}
+  AllCharacters:
+  - {fileID: 11400000, guid: 83236410daa287e40a3dbf708032eebe, type: 2}

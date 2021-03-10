@@ -10,14 +10,63 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5753b293c84cc6468df53dbca95829f, type: 3}
-  m_Name: Warrior
+  m_Name: TemplateCharacter
   m_EditorClassIdentifier: 
+  CharacterToCopy: {fileID: 0}
   MyCreature:
     CharacterName: 
     CreatureID: 0
     Type: 3
     Stats:
-      StatList: []
+      StatList:
+      - statType: 0
+        CurrentValue: 100
+        Modifiers: []
+      - statType: 1
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 2
+        CurrentValue: 100
+        Modifiers: []
+      - statType: 3
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 4
+        CurrentValue: 1
+        Modifiers: []
+      - statType: 5
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 6
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 7
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 8
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 9
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 10
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 11
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 12
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 13
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 14
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 15
+        CurrentValue: 0
+        Modifiers: []
   CurrentStamina: 0
   CurrentMana: 0
   MyCombatState: 0
