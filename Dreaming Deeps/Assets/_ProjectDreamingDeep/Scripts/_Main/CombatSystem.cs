@@ -47,5 +47,29 @@ namespace DreamingDeep
             else
                 return PlayerParty;
         }
+
+        public void BeginBattle()
+        {
+            for (int i = 0; i < PlayerParty.PartyCharacterList.Count; i++)
+            {
+                if (PlayerParty.PartyCharacterList[i].MyCombatStates.Contains(CombatState.Idle))
+                {
+                    PlayerParty.PartyCharacterList[i].JoinBattle();
+                }
+            }
+
+            for (int i = 0; i < MonsterParty.PartyCharacterList.Count; i++)
+            {
+                if (MonsterParty.PartyCharacterList[i].MyCombatStates.Contains(CombatState.Idle))
+                {
+                    MonsterParty.PartyCharacterList[i].JoinBattle();
+                }
+            }
+        }
+
+        public void SetUpMonsterParty()
+        {
+
+        }
     }
 }

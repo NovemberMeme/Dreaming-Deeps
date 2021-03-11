@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace DreamingDeep
 {
-    public interface ITargetType 
+    [CreateAssetMenu(fileName = "New Card", menuName = "Cards/New Card")]
+    public class CardSO : ScriptableObject
     {
-        PartyCharacter GetByTargetType(PartyCharacter _user);
+        
     }
 }

@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5753b293c84cc6468df53dbca95829f, type: 3}
-  m_Name: Warrior
+  m_Name: Alphamancer
   m_EditorClassIdentifier: 
+  DB: {fileID: 0}
   CharacterToCopy: {fileID: 11400000, guid: fde302418d3e34c4ba4800baa7b3b43d, type: 2}
   MyCreature:
-    CharacterName: 
+    CharacterName: Astralect
     CreatureID: 0
     Type: 3
     Stats:
@@ -32,28 +33,28 @@ MonoBehaviour:
         CurrentValue: 0
         Modifiers: []
       - statType: 4
-        CurrentValue: 0
+        CurrentValue: 1
         Modifiers: []
       - statType: 5
         CurrentValue: 0
         Modifiers: []
       - statType: 6
-        CurrentValue: 0
+        CurrentValue: 3
         Modifiers: []
       - statType: 7
         CurrentValue: 0
         Modifiers: []
       - statType: 8
-        CurrentValue: 0
+        CurrentValue: 5
         Modifiers: []
       - statType: 9
-        CurrentValue: 0
+        CurrentValue: 1.5
         Modifiers: []
       - statType: 10
         CurrentValue: 0
         Modifiers: []
       - statType: 11
-        CurrentValue: 0
+        CurrentValue: 25
         Modifiers: []
       - statType: 12
         CurrentValue: 0
@@ -67,9 +68,18 @@ MonoBehaviour:
       - statType: 15
         CurrentValue: 0
         Modifiers: []
+      - statType: 16
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 17
+        CurrentValue: 0
+        Modifiers: []
+      - statType: 18
+        CurrentValue: 0
+        Modifiers: []
   CurrentStamina: 0
   CurrentMana: 0
-  MyCombatState: 0
+  MyCombatStates: 
   MyAbility: {fileID: 0}
   MyAttack: {fileID: 11400000, guid: 5092a10495c3d9b448abf2a9ba76c141, type: 2}
   MyAbilityResponses: {fileID: 0}

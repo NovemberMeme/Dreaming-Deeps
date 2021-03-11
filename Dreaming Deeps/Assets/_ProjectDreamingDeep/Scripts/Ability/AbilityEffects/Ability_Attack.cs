@@ -22,7 +22,7 @@ namespace DreamingDeep
             _abilityData.PhysicalDamageAmount = damageAmount;
             _abilityData.MagicalDamageAmount = magicDamageAmount;
 
-            _abilityData.IsSubEffect = IsSubEffect;
+            _abilityData.Tags = MyTags;
 
             _abilityData.Target.GetTargetedByAbilityResponse(_abilityData);
         }

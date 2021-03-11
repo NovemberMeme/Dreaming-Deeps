@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace DreamingDeep
 {
-    public class TargetFrontMost : MonoBehaviour, ITargetType
+    [CreateAssetMenu(fileName = "New TargetFrontMost", menuName = "Abilities/New TargetFrontMost")]
+    public class TargetFrontMost : TargetType
     {
-        public PartyCharacter GetByTargetType(PartyCharacter _user)
+        public override PartyCharacter GetByTargetType(PartyCharacter _user)
         {
             if (DelegateController.getOpposingParty == null)
                 return null;
@@ -15,7 +16,7 @@ namespace DreamingDeep
 
             for (int i = 0; i < OpposingParty.PartyCharacterList.Count; i++)
             {
-                if (OpposingParty.PartyCharacterList[i].MyCombatState == CombatState.Combat)
+                if (OpposingParty.PartyCharacterList[i].MyCombatStates.Contains(CombatState.Combat))
                     return OpposingParty.PartyCharacterList[i];
             }
 

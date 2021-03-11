@@ -11,10 +11,7 @@ namespace DreamingDeep
 
         public virtual void RespondToAbility(AbilityData _abilityData)
         {
-            if (!_abilityData.IsSubEffect)
-                CustomResponse(_abilityData);
-            else
-                _abilityData.Target.GetDamaged(_abilityData);
+            CustomResponse(_abilityData);
 
             for (int i = 0; i < ExtraAbilityResponses.Count; i++)
             {

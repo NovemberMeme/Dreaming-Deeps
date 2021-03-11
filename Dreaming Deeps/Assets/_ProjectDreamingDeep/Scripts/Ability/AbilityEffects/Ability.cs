@@ -7,10 +7,13 @@ namespace DreamingDeep
     [CreateAssetMenu(fileName = "New Ability Effect", menuName = "Abilities/New Ability Effect")]
     public class Ability : ScriptableObject
     {
-        public ITargetType MyTargetType;
+        public TargetType MyTargetType;
 
-        public bool IsSubEffect = false;
+        public float WeaponBaseAttackTime;
+        public float ManaCost;
+        public float BonusStartingMana;
 
+        public List<AbilityTag> MyTags = new List<AbilityTag>();
         public List<Ability> ExtraEffects = new List<Ability>();
 
         public virtual void ApplyEffects(AbilityData _abilityData)
@@ -28,22 +31,15 @@ namespace DreamingDeep
 
         }
 
-        [ContextMenu("Set Extras As Subs")]
-        public virtual void SetExtrasAsSubs()
+        public virtual void EquipAbility(PartyCharacter _user)
         {
-            for (int i = 0; i < ExtraEffects.Count; i++)
-            {
-                ExtraEffects[i].IsSubEffect = true;
-            }
+            _user.MyCreature.Stats.ModifyCurrentStat(WereAllGonnaDieAnywayNew.STAT_TYPE.StartingMana, BonusStartingMana);
+            _user.MyCreature.Stats.SetCurrentStat(WereAllGonnaDieAnywayNew.STAT_TYPE._BaseAttackTime, WeaponBaseAttackTime);
         }
 
-        [ContextMenu("Un-set Extras As Subs")]
-        public virtual void UnsetExtrasAsSubs()
+        public virtual void UnEquipAbility(PartyCharacter _user)
         {
-            for (int i = 0; i < ExtraEffects.Count; i++)
-            {
-                ExtraEffects[i].IsSubEffect = false;
-            }
+
         }
     }
 }

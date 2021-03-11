@@ -10,12 +10,18 @@ namespace DreamingDeep
         Idle,
         Combat,
         Empty,
-        Dead
+        ChargingAttack,
+        Attacking,
+        ChargingAbility,
+        Casting,
+        Dead,
     }
 
     [CreateAssetMenu(fileName = "New Character", menuName = "Characters/New Character")]
     public class PartyCharacter : ScriptableObject
     {
+        public DataBaseSO DB;
+
         public PartyCharacter CharacterToCopy;
 
         public Creature MyCreature;
@@ -23,10 +29,12 @@ namespace DreamingDeep
         public float CurrentStamina = 0;
         public float CurrentMana = 0;
 
-        public CombatState MyCombatState = CombatState.Idle;
+        public List<CombatState> MyCombatStates = new List<CombatState>();
 
-        public Ability MyAbility;
-        public Ability MyAttack;
+        public Ability FrontlinerAttack;
+        public Ability BacklinerAttack;
+        public Ability FrontlinerAbility;
+        public Ability BacklinerAbility;
 
         public AbilityResponse MyAbilityResponses;
 
@@ -34,54 +42,110 @@ namespace DreamingDeep
         {
             DelegateController.tick += UpdateCombatValues;
             DelegateController.tick += MyCreature.UpdateStats;
+            MyCombatStates.Add(CombatState.Idle);
         }
 
         public virtual void DisableCharacter()
         {
             DelegateController.tick -= UpdateCombatValues;
             DelegateController.tick -= MyCreature.UpdateStats;
+            MyCombatStates.Clear();
         }
 
         public virtual void JoinBattle()
         {
             CurrentStamina = 0;
-            CurrentMana = 0;
 
-            MyCombatState = CombatState.Combat;
+            MyCreature.Stats.FindCurrentStat(STAT_TYPE.StartingMana, out float startingMana);
+            CurrentMana = startingMana;
+
+            MyCombatStates.Remove(CombatState.Idle);
+            MyCombatStates.Add(CombatState.Combat);
         }
 
         public virtual void UpdateCombatValues(int _tick)
         {
-            if (MyCombatState != CombatState.Combat)
+            if (!MyCombatStates.Contains(CombatState.Combat))
                 return;
 
             MyCreature.Stats.FindCurrentStat(STAT_TYPE.AttackSpeed, out float attackSpeed);
-            MyCreature.Stats.FindCurrentStat(STAT_TYPE.BaseAttackTime, out float baseAttackTime);
+            MyCreature.Stats.FindCurrentStat(STAT_TYPE._BaseAttackTime, out float baseAttackTime);
+            MyCreature.Stats.FindCurrentStat(STAT_TYPE._AttackDuration, out float attackDuration);
             MyCreature.Stats.FindCurrentStat(STAT_TYPE.ManaRegenPerSecond, out float manaRegenPerSecond);
-            MyCreature.Stats.FindCurrentStat(STAT_TYPE.ManaCost, out float manaCost);
+            MyCreature.Stats.FindCurrentStat(STAT_TYPE.StartingMana, out float startingMana);
+            MyCreature.Stats.FindCurrentStat(STAT_TYPE._ManaCost, out float manaCost);
+            MyCreature.Stats.FindCurrentStat(STAT_TYPE._AbilityDuration, out float abilityDuration);
 
-            float staminaGained = (1 / Utils.GetTicksPerSecond()) * (attackSpeed / 100);
-            CurrentStamina += staminaGained;
+            if (MyCombatStates.Contains(CombatState.ChargingAttack))
+            {
+                float staminaGained = (1 / Utils.GetTicksPerSecond()) * (attackSpeed / 100);
+                CurrentStamina += staminaGained;
+            }
 
-            float manaGained = (1 / Utils.GetTicksPerSecond()) * manaRegenPerSecond;
-            CurrentMana += manaGained;
+            if (MyCombatStates.Contains(CombatState.Attacking))
+            {
+                float attackDurationInTicks = attackDuration * Utils.GetTicksPerSecond();
+                float staminaLost = baseAttackTime / attackDurationInTicks;
+                CurrentStamina -= staminaLost;
+            }
+
+            if (MyCombatStates.Contains(CombatState.ChargingAbility))
+            {
+                float manaGained = (1 / Utils.GetTicksPerSecond()) * manaRegenPerSecond;
+                CurrentMana += manaGained;
+            }
+
+            if (MyCombatStates.Contains(CombatState.Casting))
+            {
+                float abilityDurationInTicks = abilityDuration * Utils.GetTicksPerSecond();
+                float manaLost = manaCost / abilityDurationInTicks;
+                CurrentMana -= manaLost;
+            }
 
             if(CurrentStamina >= baseAttackTime)
             {
+                CurrentStamina = baseAttackTime;
+                float secondsPerAttack = baseAttackTime / (attackSpeed / 100);
+                float calculatedAttackDuration = Mathf.Clamp(secondsPerAttack * DB.BaseAttackDuration, 0, DB.MaxAttackDuration);
+                MyCreature.Stats.SetCurrentStat(STAT_TYPE._AttackDuration, calculatedAttackDuration);
+
+                MyCombatStates.Remove(CombatState.ChargingAttack);
+                MyCombatStates.Add(CombatState.Attacking);
+
                 UseAttack();
-                CurrentStamina -= baseAttackTime;
+            }
+
+            if(CurrentStamina < 0)
+            {
+                CurrentStamina = 0;
+                MyCombatStates.Remove(CombatState.Attacking);
+                MyCombatStates.Add(CombatState.ChargingAttack);
             }
 
             if(CurrentMana >= manaCost)
             {
+                CurrentMana = manaCost;
+                float secondsPerAbility = manaCost / manaRegenPerSecond;
+                float calculatedAbilityDuration = Mathf.Clamp(secondsPerAbility * DB.BaseAbilityDuration, 0, DB.MaxAbilityDuration);
+                MyCreature.Stats.SetCurrentStat(STAT_TYPE._AbilityDuration, calculatedAbilityDuration);
+
+                MyCombatStates.Remove(CombatState.ChargingAbility);
+                MyCombatStates.Add(CombatState.Casting);
+
                 UseAbility();
-                CurrentMana -= manaCost;
+            }
+
+            if(CurrentMana < 0)
+            {
+                CurrentMana = 0;
+                MyCombatStates.Remove(CombatState.Casting);
+                MyCombatStates.Add(CombatState.ChargingAbility);
             }
         }
 
         public virtual void UseAttack()
         {
-            PartyCharacter Target = MyAttack.MyTargetType.GetByTargetType(this);
+            PartyCharacter Target = FrontlinerAttack.MyTargetType.GetByTargetType(this);
 
             if (Target == null)
             {
@@ -89,13 +153,13 @@ namespace DreamingDeep
                 return;
             }
 
-            AbilityData abilityData = new AbilityData(this, Target, 0, 0, false);
-            MyAttack.ApplyEffects(abilityData);
+            AbilityData abilityData = new AbilityData(this, Target, 0, 0, FrontlinerAttack.MyTags);
+            FrontlinerAttack.ApplyEffects(abilityData);
         }
 
         public virtual void UseAbility()
         {
-            PartyCharacter Target = MyAbility.MyTargetType.GetByTargetType(this);
+            PartyCharacter Target = FrontlinerAbility.MyTargetType.GetByTargetType(this);
 
             if (Target == null)
             {
@@ -103,8 +167,8 @@ namespace DreamingDeep
                 return;
             }
 
-            AbilityData abilityData = new AbilityData(this, Target, 0, 0, false);
-            MyAttack.ApplyEffects(abilityData);
+            AbilityData abilityData = new AbilityData(this, Target, 0, 0, FrontlinerAbility.MyTags);
+            FrontlinerAttack.ApplyEffects(abilityData);
         }
 
         public virtual void GetTargetedByAbilityResponse(AbilityData _abilityData)
@@ -122,8 +186,8 @@ namespace DreamingDeep
             MyCreature.Stats.ModifyCurrentStat(STAT_TYPE.Health, _abilityData.MagicalDamageAmount);
         }
 
-        [ContextMenu("Copy Character")]
-        public virtual void CopyCharacter()
+        [ContextMenu("Copy Character Stats")]
+        public virtual void CopyCharacterStats()
         {
             MyCreature.Stats = CharacterToCopy.MyCreature.Stats;
         }
