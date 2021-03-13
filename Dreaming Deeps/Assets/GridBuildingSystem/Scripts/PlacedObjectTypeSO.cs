@@ -29,7 +29,7 @@ public class PlacedObjectTypeSO : ScriptableObject {
     public int height;
 
 
-    public int GetRotationAngle(Dir dir) {
+    public virtual int GetRotationAngle(Dir dir) {
         switch (dir) {
             default:
             case Dir.Down:  return 0;
@@ -49,7 +49,7 @@ public class PlacedObjectTypeSO : ScriptableObject {
         }
     }
 
-    public List<Vector2Int> GetGridPositionList(Vector2Int offset, Dir dir) {
+    public virtual List<Vector2Int> GetGridPositionList(Vector2Int offset, Dir dir) {
         List<Vector2Int> gridPositionList = new List<Vector2Int>();
         switch (dir) {
             default:

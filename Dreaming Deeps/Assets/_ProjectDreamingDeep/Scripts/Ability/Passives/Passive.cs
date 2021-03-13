@@ -7,8 +7,6 @@ namespace DreamingDeep
     [CreateAssetMenu(fileName = "New Passive", menuName = "Abilities/New Passive")]
     public class Passive : ScriptableObject
     {
-        public List<PartyCharacter> AffectedTargets = new List<PartyCharacter>();
-
         public List<Passive> ExtraEffects = new List<Passive>();
 
         public virtual void ApplyEffects(AbilityData _abilityData)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DreamingDeep
 {
-    [CreateAssetMenu(fileName = "New Thorns Response", menuName = "Abilites/New Thorns Response")]
+    [CreateAssetMenu(fileName = "New Thorns Response", menuName = "Abilities/New Thorns Response")]
     public class Response_Thorns : AbilityResponse
     {
         

@@ -4,11 +4,10 @@ using UnityEngine;
 
 namespace DreamingDeep
 {
-    [CreateAssetMenu(fileName = "New Aura", menuName = "Abilities/New Aura")]
-    public class Aura : ScriptableObject
+    public class PassiveEntity : MonoBehaviour
     {
         public Passive MyPassiveEffect;
 
-        public TileTemplateSO AffectedTiles;
+        public List<PartyCharacter> AffectedTargets = new List<PartyCharacter>();
     }
 }

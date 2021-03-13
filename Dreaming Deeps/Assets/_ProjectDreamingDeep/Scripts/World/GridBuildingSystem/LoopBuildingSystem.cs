@@ -69,7 +69,7 @@ namespace DreamingDeep
         [Header("BuildingSystem Settings: ")]
 
         protected Grid<WorldTileObject> _grid;
-        [SerializeField] protected PlacedObjectTypeSO WorldTileObjectTypeSO;
+        [SerializeField] protected PlacedWorldTileTypeSO placedWorldTileTypeSO;
 
         [Header("Grid Settings: ")]
 
@@ -109,7 +109,7 @@ namespace DreamingDeep
 
         protected virtual void CheckMouseInput()
         {
-            if (Input.GetMouseButtonDown(0) && WorldTileObjectTypeSO != null)
+            if (Input.GetMouseButtonDown(0) && placedWorldTileTypeSO != null)
             {
                 Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
 
@@ -118,7 +118,7 @@ namespace DreamingDeep
                 //PlaceWorldTile(mousePosition);
             }
 
-            if (Input.GetMouseButtonDown(1) && WorldTileObjectTypeSO != null)
+            if (Input.GetMouseButtonDown(1) && placedWorldTileTypeSO != null)
             {
                 Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
 
@@ -200,7 +200,7 @@ namespace DreamingDeep
 
             Vector2Int _placedObjectOrigin = new Vector2Int(x, z);
 
-            List<Vector2Int> gridPositionList = WorldTileObjectTypeSO.GetGridPositionList(_placedObjectOrigin, dir);
+            List<Vector2Int> gridPositionList = placedWorldTileTypeSO.GetGridPositionList(_placedObjectOrigin, dir);
             bool canBuild = true;
             foreach (Vector2Int gridPosition in gridPositionList)
             {
@@ -213,11 +213,11 @@ namespace DreamingDeep
 
             if (canBuild)
             {
-                Vector2Int rotationOffset = WorldTileObjectTypeSO.GetRotationOffset(dir);
+                Vector2Int rotationOffset = placedWorldTileTypeSO.GetRotationOffset(dir);
                 Vector3 placedObjectWorldPosition = _grid.GetWorldPosition(x, z) + new Vector3(rotationOffset.x, rotationOffset.y) * _grid.GetCellSize();
 
-                PlacedObject_WorldTile placedObject = PlacedObject_WorldTile.Create(WorldTileParent, StartingAspects, placedObjectWorldPosition, _placedObjectOrigin, dir, WorldTileObjectTypeSO);
-                placedObject.transform.rotation = Quaternion.Euler(0, 0, -WorldTileObjectTypeSO.GetRotationAngle(dir));
+                PlacedObject_WorldTile placedObject = PlacedObject_WorldTile.Create(WorldTileParent, StartingAspects, placedObjectWorldPosition, _placedObjectOrigin, dir, placedWorldTileTypeSO);
+                placedObject.transform.rotation = Quaternion.Euler(0, 0, -placedWorldTileTypeSO.GetRotationAngle(dir));
 
                 foreach (Vector2Int gridPosition in gridPositionList)
                 {
@@ -240,9 +240,9 @@ namespace DreamingDeep
             Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
             _grid.GetXY(mousePosition, out int x, out int y);
 
-            if (WorldTileObjectTypeSO != null)
+            if (placedWorldTileTypeSO != null)
             {
-                Vector2Int rotationOffset = WorldTileObjectTypeSO.GetRotationOffset(dir);
+                Vector2Int rotationOffset = placedWorldTileTypeSO.GetRotationOffset(dir);
                 Vector3 placedObjectWorldPosition = _grid.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y) * _grid.GetCellSize();
                 return placedObjectWorldPosition;
             }
@@ -254,7 +254,7 @@ namespace DreamingDeep
 
         public override PlacedObjectTypeSO GetPlacedObjectTypeSO()
         {
-            return WorldTileObjectTypeSO;
+            return placedWorldTileTypeSO;
         }
     }
 }

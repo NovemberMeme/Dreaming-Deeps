@@ -1705,7 +1705,7 @@ MonoBehaviour:
   StartingAspects: []
   LoopPathAspect: {fileID: 11400000, guid: c157afa1c961ddf4898b03e03bb89af3, type: 2}
   WorldTileParent: {fileID: 0}
-  WorldTileObjectTypeSO: {fileID: 11400000, guid: e255beb11cd10a34eaaef0153511d014,
+  placedWorldTileTypeSO: {fileID: 11400000, guid: 269c829ad94119d4b897e752bda85208,
     type: 2}
   CellSize: 10
   OriginPosition: {fileID: 1023549431}

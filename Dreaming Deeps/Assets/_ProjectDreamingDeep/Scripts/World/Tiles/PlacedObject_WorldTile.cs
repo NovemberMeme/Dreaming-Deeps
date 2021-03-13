@@ -6,21 +6,35 @@ namespace DreamingDeep
 {
     public class PlacedObject_WorldTile : PlacedObject_Done
     {
+        [SerializeField] protected PlacedWorldTileTypeSO placedWorldTileTypeSO;
+
         [SerializeField] protected GameObject DefaultVisuals;
 
         [SerializeField] protected List<TileAspect> myAspects = new List<TileAspect>();
 
         public List<TileAspect> MyAspects { get => myAspects; set => myAspects = value; }
 
-        public static PlacedObject_WorldTile Create(Transform _worldTileParent, List<TileAspect> _startingAspects, Vector3 worldPosition, Vector2Int origin, PlacedObjectTypeSO.Dir dir, PlacedObjectTypeSO placedObjectTypeSO)
+        public static PlacedObject_WorldTile Create(Transform _worldTileParent, List<TileAspect> _startingAspects, Vector3 worldPosition, Vector2Int origin, PlacedWorldTileTypeSO.Dir dir, PlacedWorldTileTypeSO _placedWorldTileTypeSO)
         {
-            Transform placedObjectTransform = Instantiate(placedObjectTypeSO.prefab, worldPosition, Quaternion.Euler(0, placedObjectTypeSO.GetRotationAngle(dir), 0), _worldTileParent);
+            Transform placedObjectTransform = Instantiate(_placedWorldTileTypeSO.prefab, worldPosition, Quaternion.Euler(0, _placedWorldTileTypeSO.GetRotationAngle(dir), 0), _worldTileParent);
 
             PlacedObject_WorldTile placedObject = placedObjectTransform.GetComponent<PlacedObject_WorldTile>();
-            placedObject.Setup(placedObjectTypeSO, origin, dir);
+            placedObject.SetupTile(_placedWorldTileTypeSO, origin, dir);
             placedObject.SetTileAspects(_startingAspects);
 
             return placedObject;
+        }
+
+        protected virtual void SetupTile(PlacedWorldTileTypeSO _placedWorldTileTypeSO, Vector2Int origin, PlacedObjectTypeSO.Dir dir)
+        {
+            this.placedWorldTileTypeSO = _placedWorldTileTypeSO;
+            this.origin = origin;
+            this.dir = dir;
+        }
+
+        public override List<Vector2Int> GetGridPositionList()
+        {
+            return placedWorldTileTypeSO.GetGridPositionList(origin, dir);
         }
 
         public virtual void DeleteAspects()

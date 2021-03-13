@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DreamingDeep
 {
-    [CreateAssetMenu(fileName = "New Evasion Response", menuName = "Abilites/New Evasion Response")]
+    [CreateAssetMenu(fileName = "New Evasion Response", menuName = "Abilities/New Evasion Response")]
     public class Response_Evasion : AbilityResponse
     {
         

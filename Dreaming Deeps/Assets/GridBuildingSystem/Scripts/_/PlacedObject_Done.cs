@@ -20,13 +20,13 @@ public class PlacedObject_Done : MonoBehaviour {
     protected Vector2Int origin;
     protected PlacedObjectTypeSO.Dir dir;
 
-    protected void Setup(PlacedObjectTypeSO placedObjectTypeSO, Vector2Int origin, PlacedObjectTypeSO.Dir dir) {
+    protected virtual void Setup(PlacedObjectTypeSO placedObjectTypeSO, Vector2Int origin, PlacedObjectTypeSO.Dir dir) {
         this.placedObjectTypeSO = placedObjectTypeSO;
         this.origin = origin;
         this.dir = dir;
     }
 
-    public List<Vector2Int> GetGridPositionList() {
+    public virtual List<Vector2Int> GetGridPositionList() {
         return placedObjectTypeSO.GetGridPositionList(origin, dir);
     }
 

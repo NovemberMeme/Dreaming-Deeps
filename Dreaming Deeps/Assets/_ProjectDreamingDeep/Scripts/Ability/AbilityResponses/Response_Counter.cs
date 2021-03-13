@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DreamingDeep
 {
-    [CreateAssetMenu(fileName = "New Counter Response", menuName = "Abilites/New Counter Response")]
+    [CreateAssetMenu(fileName = "New Counter Response", menuName = "Abilities/New Counter Response")]
     public class Response_Counter : AbilityResponse
     {
         
