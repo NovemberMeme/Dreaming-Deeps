@@ -52,6 +52,8 @@ namespace DreamingDeep
 
     public class LoopBuildingSystem : GridBuildingSystem2D
     {
+        #region Fields and Properties
+
         public static GridBuildingSystem2D _Instance { get; private set; }
 
         [Header("Database Settings: ")]
@@ -76,6 +78,10 @@ namespace DreamingDeep
         [SerializeField] protected float CellSize = 10;
         [SerializeField] protected Transform OriginPosition;
 
+        #endregion
+
+        #region Unity Callbacks
+
         protected override void Awake()
         {
             _Instance = this;
@@ -88,6 +94,10 @@ namespace DreamingDeep
         {
             CheckMouseInput();
         }
+
+        #endregion
+
+        #region Build System Code
 
         protected virtual void InitializeGrid()
         {
@@ -160,39 +170,6 @@ namespace DreamingDeep
                 currentTileObject.SetTileAspects(newAspects);
         }
 
-        public virtual void SaveWorldData()
-        {
-            List<WorldTileData> _newWorldSaveData = new List<WorldTileData>();
-
-            for (int x = 0; x < DB.GridWidth; x++)
-            {
-                for (int y = 0; y < DB.GridHeight; y++)
-                {
-                    _newWorldSaveData.Add(
-                        new WorldTileData(_grid.GetGridObject(new Vector3(x * CellSize, y * CellSize)).GetPlacedObject().MyAspects));
-                }
-            }
-
-            DB.SaveWorldData(_newWorldSaveData);
-        }
-
-        public virtual void LoadWorldData()
-        {
-            if (DB.WorldTileDatas == null)
-                return;
-
-            int i = 0;
-
-            for (int x = 0; x < DB.GridWidth; x++)
-            {
-                for (int y = 0; y < DB.GridHeight; y++)
-                {
-                    _grid.GetGridObject(new Vector3(x * CellSize, y * CellSize)).GetPlacedObject().
-                        SetTileAspects(DB.WorldTileDatas[i].SavedAspects);
-                    i++;
-                }
-            }
-        }
 
         public virtual void PlaceWorldTile(Vector3 _placePosition)
         {
@@ -256,5 +233,71 @@ namespace DreamingDeep
         {
             return placedWorldTileTypeSO;
         }
+
+        #endregion
+
+        #region Random Loop Builder
+
+        public virtual void GenerateRandomLoopPath()
+        {
+            Vector2Int randomLoopSize = GenerateRandomLoopSize();
+            Vector2Int maxLoopPlacementRange = new Vector2Int(DB.GridWidth - randomLoopSize.x - 1, DB.GridHeight - randomLoopSize.y - 1);
+            Vector2Int randomLoopPlacement = 
+                new Vector2Int(UnityEngine.Random.Range(1, maxLoopPlacementRange.x), UnityEngine.Random.Range(1, maxLoopPlacementRange.y));
+
+
+        }
+
+        public virtual Vector2Int GenerateRandomLoopSize()
+        {
+            int loopHeight = UnityEngine.Random.Range(DB.MinRandomLoopHeight, DB.MaxRandomLoopHeight);
+            int loopWidth = UnityEngine.Random.Range(DB.MinRandomLoopWidth, DB.MaxRandomLoopWidth);
+            return new Vector2Int(loopWidth, loopHeight);
+        }
+
+        public virtual void GetRandomPathDirection(Vector2Int _currentPos)
+        {
+
+        }
+
+        #endregion
+
+        #region Save/Load
+
+        public virtual void SaveWorldData()
+        {
+            List<WorldTileData> _newWorldSaveData = new List<WorldTileData>();
+
+            for (int x = 0; x < DB.GridWidth; x++)
+            {
+                for (int y = 0; y < DB.GridHeight; y++)
+                {
+                    _newWorldSaveData.Add(
+                        new WorldTileData(_grid.GetGridObject(new Vector3(x * CellSize, y * CellSize)).GetPlacedObject().MyAspects));
+                }
+            }
+
+            DB.SaveWorldData(_newWorldSaveData);
+        }
+
+        public virtual void LoadWorldData()
+        {
+            if (DB.WorldTileDatas == null)
+                return;
+
+            int i = 0;
+
+            for (int x = 0; x < DB.GridWidth; x++)
+            {
+                for (int y = 0; y < DB.GridHeight; y++)
+                {
+                    _grid.GetGridObject(new Vector3(x * CellSize, y * CellSize)).GetPlacedObject().
+                        SetTileAspects(DB.WorldTileDatas[i].SavedAspects);
+                    i++;
+                }
+            }
+        }
+
+        #endregion
     }
 }

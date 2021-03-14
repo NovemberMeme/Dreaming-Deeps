@@ -31,8 +31,7 @@ namespace DreamingDeep
 
         public List<CombatState> MyCombatStates = new List<CombatState>();
 
-        public Ability FrontlinerAttack;
-        public Ability BacklinerAttack;
+        public Ability MyAttack;
         public Ability FrontlinerAbility;
         public Ability BacklinerAbility;
 
@@ -145,7 +144,7 @@ namespace DreamingDeep
 
         public virtual void UseAttack()
         {
-            PartyCharacter Target = FrontlinerAttack.MyTargetType.GetByTargetType(this);
+            PartyCharacter Target = MyAttack.MyTargetType.GetByTargetType(this);
 
             if (Target == null)
             {
@@ -153,8 +152,8 @@ namespace DreamingDeep
                 return;
             }
 
-            AbilityData abilityData = new AbilityData(this, Target, 0, 0, FrontlinerAttack.MyTags);
-            FrontlinerAttack.ApplyEffects(abilityData);
+            AbilityData abilityData = new AbilityData(this, Target, 0, 0, MyAttack.MyTags);
+            MyAttack.ApplyEffects(abilityData);
         }
 
         public virtual void UseAbility()
@@ -168,7 +167,7 @@ namespace DreamingDeep
             }
 
             AbilityData abilityData = new AbilityData(this, Target, 0, 0, FrontlinerAbility.MyTags);
-            FrontlinerAttack.ApplyEffects(abilityData);
+            MyAttack.ApplyEffects(abilityData);
         }
 
         public virtual void GetTargetedByAbilityResponse(AbilityData _abilityData)
