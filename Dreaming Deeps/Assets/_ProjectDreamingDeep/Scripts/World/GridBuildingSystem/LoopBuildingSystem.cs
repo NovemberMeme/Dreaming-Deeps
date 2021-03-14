@@ -48,6 +48,16 @@ namespace DreamingDeep
             return placedObject == null;
         }
 
+        public bool CanAddTileAspect(TileAspect _aspectToAdd)
+        {
+            if (placedObject.MyAspects.Contains(_aspectToAdd))
+            {
+                if(_aspectToAdd.IsLoopPathAspect)
+                    return false;
+            }
+
+            return true;
+        }
     }
 
     public class LoopBuildingSystem : GridBuildingSystem2D
@@ -55,6 +65,8 @@ namespace DreamingDeep
         #region Fields and Properties
 
         public static GridBuildingSystem2D _Instance { get; private set; }
+
+        private Pathfinding loopPathFinding;
 
         [Header("Database Settings: ")]
 
@@ -102,6 +114,7 @@ namespace DreamingDeep
         protected virtual void InitializeGrid()
         {
             _grid = new Grid<WorldTileObject>(DB.ShowDebug, DB.GridWidth, DB.GridHeight, CellSize, OriginPosition.position, (Grid<WorldTileObject> g, int x, int y) => new WorldTileObject(g, x, y));
+            loopPathFinding = new Pathfinding(DB.GridWidth, DB.GridHeight, CellSize, OriginPosition.position, StartingAspects, LoopPathAspect);
         }
 
         protected virtual void InitializeWorldTiles()
@@ -242,10 +255,54 @@ namespace DreamingDeep
         {
             Vector2Int randomLoopSize = GenerateRandomLoopSize();
             Vector2Int maxLoopPlacementRange = new Vector2Int(DB.GridWidth - randomLoopSize.x - 1, DB.GridHeight - randomLoopSize.y - 1);
-            Vector2Int randomLoopPlacement = 
-                new Vector2Int(UnityEngine.Random.Range(1, maxLoopPlacementRange.x), UnityEngine.Random.Range(1, maxLoopPlacementRange.y));
 
+            List<Vector2Int> randomLoopPathNodes = new List<Vector2Int>();
 
+            int randomAmount = UnityEngine.Random.Range(3, 6);
+
+            for (int i = 0; i < randomAmount; i++)
+            {
+                randomLoopPathNodes.Add(GetRandomPathNode(maxLoopPlacementRange));
+            }
+
+            List<Vector2Int> allLoopPathNodes = new List<Vector2Int>();
+
+            int j = 0;
+            while(j < randomAmount + 1)
+            {
+                if (j < randomAmount - 1)
+                {
+                    AddLoopPathNodes(Pathfinding.Instance.FindPath(randomLoopPathNodes[j], randomLoopPathNodes[j + 1]), allLoopPathNodes);
+                }
+                else
+                {
+                    // Check if it can still pathfind to goal even if goal cant be reached cuz it itself has looppathaspect
+                    AddLoopPathNodes(Pathfinding.Instance.FindPath(randomLoopPathNodes[j], randomLoopPathNodes[0]), allLoopPathNodes);
+                }
+            }
+        }
+
+        protected virtual List<Vector2Int> AddLoopPathNodes(List<PathNode> _pathNodes, List<Vector2Int> _allPathNodes)
+        {
+            for (int i = 0; i < _pathNodes.Count; i++)
+            {
+                _allPathNodes.Add(new Vector2Int(_pathNodes[i].x, _pathNodes[i].y));
+            }
+
+            return _allPathNodes;
+        }
+
+        protected virtual Vector2Int GetRandomPathNode(Vector2Int _maxLoopPlacementRange)
+        {
+            while (true)
+            {
+                Vector2Int randomPathNode =
+                    new Vector2Int(UnityEngine.Random.Range(1, _maxLoopPlacementRange.x), UnityEngine.Random.Range(1, _maxLoopPlacementRange.y));
+                if(!Pathfinding.Instance.IsAdjacentToOtherLoopPaths(Pathfinding.Instance.GetNode(randomPathNode.x, randomPathNode.y)))
+                {
+                    return randomPathNode;
+                }
+            }
         }
 
         public virtual Vector2Int GenerateRandomLoopSize()

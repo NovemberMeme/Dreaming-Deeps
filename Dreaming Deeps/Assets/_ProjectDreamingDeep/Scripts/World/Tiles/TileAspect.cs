@@ -8,5 +8,7 @@ namespace DreamingDeep
     public class TileAspect : ScriptableObject
     {
         public GameObject VisualsPrefab;
+
+        public bool IsLoopPathAspect = false;
     }
 }
