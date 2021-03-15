@@ -180,6 +180,9 @@ public class Pathfinding {
         // Up
         if (GetNode(_currentNode.x, _currentNode.y + 1).TileAspects.Contains(LoopPathAspect))
             return true;
+        // Same Tile
+        if (GetNode(_currentNode.x, _currentNode.y).TileAspects.Contains(LoopPathAspect))
+            return true;
 
         return false;
     }

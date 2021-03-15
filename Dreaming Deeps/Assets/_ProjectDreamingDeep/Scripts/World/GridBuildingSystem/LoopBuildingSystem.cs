@@ -170,6 +170,24 @@ namespace DreamingDeep
             currentTileObject.DeleteAspects();
         }
 
+        public virtual void DeleteTileAspects(Vector2Int _placeVector2Int)
+        {
+            PlacedObject_WorldTile currentTileObject = _grid.GetGridObject(_placeVector2Int.x, _placeVector2Int.y).GetPlacedObject();
+
+            currentTileObject.DeleteAspects();
+        }
+
+        public virtual void DeleteAllTileAspects()
+        {
+            for (int x = 0; x < DB.GridWidth; x++)
+            {
+                for (int y = 0; y < DB.GridHeight; y++)
+                {
+                    DeleteTileAspects(new Vector3(x * CellSize, y * CellSize, 0));
+                }
+            }
+        }
+
         public virtual void SetTileAspect(TileAspect _tileAspect, Vector3 _placePosition)
         {
             _grid.GetXY(_placePosition, out int x, out int z);
@@ -269,6 +287,7 @@ namespace DreamingDeep
 
         public virtual void GenerateRandomLoopPath()
         {
+            DeleteAllTileAspects();
             Vector2Int randomLoopSize = GenerateRandomLoopSize();
             Vector2Int maxLoopPlacementRange = new Vector2Int(DB.GridWidth - randomLoopSize.x - 1, DB.GridHeight - randomLoopSize.y - 1);
 
