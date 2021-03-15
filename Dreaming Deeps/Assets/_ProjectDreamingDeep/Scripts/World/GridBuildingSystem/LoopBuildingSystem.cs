@@ -105,6 +105,11 @@ namespace DreamingDeep
         protected override void Update()
         {
             CheckMouseInput();
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                GenerateRandomLoopPath();
+            }
         }
 
         #endregion
@@ -175,6 +180,17 @@ namespace DreamingDeep
             Vector2Int _placedObjectOrigin = new Vector2Int(x, z);
 
             PlacedObject_WorldTile currentTileObject = _grid.GetGridObject(_placePosition).GetPlacedObject();
+
+            List<TileAspect> newAspects = new List<TileAspect>();
+            newAspects.Add(LoopPathAspect);
+
+            if (!currentTileObject.MyAspects.Contains(LoopPathAspect))
+                currentTileObject.SetTileAspects(newAspects);
+        }
+
+        public virtual void SetTileAspect(TileAspect _tileAspect, Vector2Int _placeVector2Int)
+        {
+            PlacedObject_WorldTile currentTileObject = _grid.GetGridObject(_placeVector2Int.x, _placeVector2Int.y).GetPlacedObject();
 
             List<TileAspect> newAspects = new List<TileAspect>();
             newAspects.Add(LoopPathAspect);
@@ -268,17 +284,25 @@ namespace DreamingDeep
             List<Vector2Int> allLoopPathNodes = new List<Vector2Int>();
 
             int j = 0;
-            while(j < randomAmount + 1)
+            while(j < randomAmount)
             {
                 if (j < randomAmount - 1)
                 {
                     AddLoopPathNodes(Pathfinding.Instance.FindPath(randomLoopPathNodes[j], randomLoopPathNodes[j + 1]), allLoopPathNodes);
+                    j++;
                 }
                 else
                 {
                     // Check if it can still pathfind to goal even if goal cant be reached cuz it itself has looppathaspect
                     AddLoopPathNodes(Pathfinding.Instance.FindPath(randomLoopPathNodes[j], randomLoopPathNodes[0]), allLoopPathNodes);
+                    j++;
                 }
+            }
+
+            // set tile aspect on all placedobject_worldtiles on our grid
+            for (int k = 0; k < allLoopPathNodes.Count; k++)
+            {
+                SetTileAspect(LoopPathAspect, allLoopPathNodes[k]);
             }
         }
 

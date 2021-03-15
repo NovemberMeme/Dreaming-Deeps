@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b129f2f306c3f4bb7d59269bcb3769, type: 3}
   m_Name: DB
   m_EditorClassIdentifier: 
+  BaseAttackDuration: 0.4
+  MaxAttackDuration: 0.8
+  BaseAbilityDuration: 0.4
+  MaxAbilityDuration: 1.2
+  MinRandomLoopWidth: 9
+  MaxRandomLoopWidth: 13
+  MinRandomLoopHeight: 7
+  MaxRandomLoopHeight: 10
+  ShowDebug: 0
   GridWidth: 20
   GridHeight: 15
+  WorldTileDatas: []
