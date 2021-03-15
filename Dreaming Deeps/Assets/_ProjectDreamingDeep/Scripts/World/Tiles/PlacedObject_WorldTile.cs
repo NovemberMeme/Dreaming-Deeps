@@ -12,6 +12,8 @@ namespace DreamingDeep
 
         [SerializeField] protected List<TileAspect> myAspects = new List<TileAspect>();
 
+        [SerializeField] protected List<TileVisual> MyVisuals = new List<TileVisual>();
+
         public List<TileAspect> MyAspects { get => myAspects; set => myAspects = value; }
 
         public static PlacedObject_WorldTile Create(Transform _worldTileParent, List<TileAspect> _startingAspects, Vector3 worldPosition, Vector2Int origin, PlacedWorldTileTypeSO.Dir dir, PlacedWorldTileTypeSO _placedWorldTileTypeSO)
@@ -41,7 +43,7 @@ namespace DreamingDeep
         {
             myAspects.Clear();
 
-            UpdateMyVisuals();
+            UpdateAllVisuals();
         }
 
         public virtual void SetTileAspects(List<TileAspect> _newAspects)
@@ -53,7 +55,7 @@ namespace DreamingDeep
             //        myAspects.Add(_newAspects[i]);
             //}
 
-            UpdateMyVisuals();
+            UpdateAllVisuals();
         }
 
         public virtual void SetTileAspects(TileAspect _newAspect)
@@ -61,24 +63,69 @@ namespace DreamingDeep
             if (!myAspects.Contains(_newAspect))
                 myAspects.Add(_newAspect);
 
-            UpdateMyVisuals();
+            UpdateAllVisuals();
         }
 
-        protected virtual void UpdateMyVisuals()
+        protected virtual void HideAllVisuals()
         {
-            for (int i = transform.childCount - 1; i >= 0; i--)
+            for (int i = 0; i < MyVisuals.Count; i++)
             {
-                Destroy(transform.GetChild(i).gameObject);
+                MyVisuals[i].SetActiveVisual(false);
+            }
+        }
+
+        protected virtual void InstantiateVisual(GameObject _visualPrefab)
+        {
+            GameObject newVisualObject = Instantiate(_visualPrefab, transform.position, Quaternion.identity, transform);
+            TileVisual newVisual = newVisualObject.GetComponent<TileVisual>();
+            MyVisuals.Add(newVisual);
+        }
+
+        protected virtual bool HasVisual(int _prefabIndex, out TileVisual _tileVisualAtIndex)
+        {
+            for (int i = 0; i < MyVisuals.Count; i++)
+            {
+                if(MyVisuals[i].PrefabIndex == _prefabIndex)
+                {
+                    _tileVisualAtIndex = MyVisuals[i];
+                    return true;
+                }
+            }
+            _tileVisualAtIndex = null;
+            return false;
+        }
+
+        protected virtual void UpdateAllVisuals()
+        {
+            HideAllVisuals();
+
+            for (int i = 0; i < MyAspects.Count; i++)
+            {
+                int prefabIndex = MyAspects[i].VisualsPrefab.GetComponent<TileVisual>().PrefabIndex;
+
+                if(HasVisual(prefabIndex, out TileVisual _tileVisualAtIndex))
+                {
+                    _tileVisualAtIndex.SetActiveVisual(true);
+                }
+                else
+                {
+                    InstantiateVisual(MyAspects[i].VisualsPrefab);
+                }
             }
 
-            if (MyAspects.Count < 1)
-            {
-                GameObject newVisuals = Instantiate(DefaultVisuals, transform.position, Quaternion.identity, transform);
-            }
-            else
-            {
-                GameObject newVisuals = Instantiate(MyAspects[0].VisualsPrefab, transform.position, Quaternion.identity, transform);
-            }
+            //for (int i = transform.childCount - 1; i >= 0; i--)
+            //{
+            //    Destroy(transform.GetChild(i).gameObject);
+            //}
+
+            //if (MyAspects.Count < 1)
+            //{
+            //    GameObject newVisuals = Instantiate(DefaultVisuals, transform.position, Quaternion.identity, transform);
+            //}
+            //else
+            //{
+            //    GameObject newVisuals = Instantiate(MyAspects[0].VisualsPrefab, transform.position, Quaternion.identity, transform);
+            //}
         }
     }
 }
