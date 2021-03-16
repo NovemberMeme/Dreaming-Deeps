@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89d3b96f889d0b84183a4092ab0da51c, type: 3}
-  m_Name: LoopPathAspect
+  m_Name: WorldTileAspect
   m_EditorClassIdentifier: 
-  VisualsPrefab: {fileID: 6438820267369466253, guid: 797f156bcfcd596418eb2995fe7f168c,
+  VisualsPrefab: {fileID: 1818990516081512133, guid: 4ac5de2f84474d14aa45c5b78e6fe564,
     type: 3}
-  IsLoopPathAspect: 1
+  IsLoopPathAspect: 0

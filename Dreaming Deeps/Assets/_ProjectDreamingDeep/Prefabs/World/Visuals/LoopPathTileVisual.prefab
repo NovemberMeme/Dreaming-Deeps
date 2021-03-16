@@ -214,6 +214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64161458cc76bb446be1f3c92130886d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PrefabIndex: 1
+  LoopPathIndex: 0
+  LoopPathIndexText: {fileID: 4685116829963257845}
+  RendererComponent: {fileID: 4372121650652316152}
 --- !u!1 &7131636358247988447
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,8 +501,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

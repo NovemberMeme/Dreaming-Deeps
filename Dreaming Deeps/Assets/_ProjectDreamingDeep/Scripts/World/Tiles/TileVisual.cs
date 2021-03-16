@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace DreamingDeep
 {
@@ -14,11 +15,22 @@ namespace DreamingDeep
 
         public int PrefabIndex = 0;
 
-        public MonoBehaviour RendererComponent;
+        public int LoopPathIndex;
+        public TextMeshProUGUI LoopPathIndexText;
+
+        public SpriteRenderer RendererComponent;
 
         public virtual void SetActiveVisual(bool _isActive)
         {
             RendererComponent.enabled = _isActive;
+            LoopPathIndexText.enabled = _isActive;
+        }
+
+        public virtual void SetLoopPath(bool _isActive, int _index)
+        {
+            LoopPathIndexText.enabled = _isActive;
+            LoopPathIndex = _index;
+            LoopPathIndexText.text = LoopPathIndex.ToString();
         }
     }
 }
