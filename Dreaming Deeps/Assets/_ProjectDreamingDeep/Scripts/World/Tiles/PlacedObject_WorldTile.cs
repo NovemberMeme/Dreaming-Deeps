@@ -10,9 +10,9 @@ namespace DreamingDeep
 
         [SerializeField] protected GameObject DefaultVisuals;
 
-        [SerializeField] protected List<TileAspect> myAspects = new List<TileAspect>();
-
         [SerializeField] protected List<TileVisual> MyVisuals = new List<TileVisual>();
+
+        [SerializeField] protected List<TileAspect> myAspects = new List<TileAspect>();
 
         public List<TileAspect> MyAspects { get => myAspects; set => myAspects = value; }
 
@@ -41,21 +41,21 @@ namespace DreamingDeep
 
         public virtual void DeleteAspects()
         {
-            myAspects.Clear();
+            MyAspects.Clear();
 
             UpdateAllVisuals();
         }
 
         public virtual void SetTileAspects(List<TileAspect> _newAspects)
         {
-            myAspects = _newAspects;
+            MyAspects = _newAspects;
 
             UpdateAllVisuals();
         }
 
         public virtual void SetTileAspects(List<TileAspect> _newAspects, int _loopPathIndex)
         {
-            myAspects = _newAspects;
+            MyAspects = _newAspects;
 
             UpdateAllVisuals(_loopPathIndex);
         }
@@ -75,8 +75,8 @@ namespace DreamingDeep
 
         public virtual void SetTileAspects(TileAspect _newAspect)
         {
-            if (!myAspects.Contains(_newAspect))
-                myAspects.Add(_newAspect);
+            if (!MyAspects.Contains(_newAspect))
+                MyAspects.Add(_newAspect);
 
             UpdateAllVisuals();
         }

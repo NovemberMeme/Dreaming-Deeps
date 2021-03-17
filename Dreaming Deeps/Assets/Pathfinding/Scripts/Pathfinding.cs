@@ -192,6 +192,18 @@ public class Pathfinding {
         return grid.GetGridObject(x, y);
     }
 
+    public virtual void SetAllWalkable(bool _isWalkable)
+    {
+        for (int x = 0; x < grid.GetWidth(); x++)
+        {
+            for (int y = 0; y < grid.GetHeight(); y++)
+            {
+                PathNode pathNode = grid.GetGridObject(x, y);
+                pathNode.SetIsWalkable(_isWalkable);
+            }
+        }
+    }
+
     private List<PathNode> CalculatePath(PathNode endNode) {
         List<PathNode> path = new List<PathNode>();
         path.Add(endNode);

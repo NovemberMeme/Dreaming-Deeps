@@ -64,6 +64,8 @@ namespace DreamingDeep
     {
         #region Fields and Properties
 
+        public ThingRuntimeSet tileRuntimeSet;
+
         public static GridBuildingSystem2D _Instance { get; private set; }
 
         private Pathfinding loopPathFinding;
@@ -181,12 +183,20 @@ namespace DreamingDeep
 
         public virtual void DeleteAllTileAspects()
         {
-            for (int x = 0; x < DB.GridWidth; x++)
+            //for (int x = 0; x < DB.GridWidth; x++)
+            //{
+            //    for (int y = 0; y < DB.GridHeight; y++)
+            //    {
+            //        DeleteTileAspects(new Vector2Int(x, y));
+            //        Pathfinding.Instance.GetNode(x, y).SetIsWalkable(true);
+            //    }
+            //}
+
+            for (int i = 0; i < tileRuntimeSet.Items.Count; i++)
             {
-                for (int y = 0; y < DB.GridHeight; y++)
-                {
-                    DeleteTileAspects(new Vector3(x * CellSize, y * CellSize, 0));
-                }
+                PlacedObject_WorldTile worldTile = tileRuntimeSet.Items[i].GetComponent<PlacedObject_WorldTile>();
+                worldTile.DeleteAspects();
+                Pathfinding.Instance.SetAllWalkable(true);
             }
         }
 
@@ -312,7 +322,7 @@ namespace DreamingDeep
 
             List<Vector2Int> randomLoopPathNodes = new List<Vector2Int>();
 
-            int randomAmount = UnityEngine.Random.Range(3, 6);
+            int randomAmount = UnityEngine.Random.Range(4, 6);
 
             for (int i = 0; i < randomAmount; i++)
             {
@@ -326,7 +336,15 @@ namespace DreamingDeep
             {
                 if (j < randomAmount - 1)
                 {
-                    AddLoopPathNodes(Pathfinding.Instance.FindPath(randomLoopPathNodes[j], randomLoopPathNodes[j + 1]), allLoopPathNodes);
+                    List<PathNode> addNodes = Pathfinding.Instance.FindPath(randomLoopPathNodes[j], randomLoopPathNodes[j + 1]);
+
+                    if (addNodes == null)
+                    {
+                        GenerateRandomLoopPath();
+                        return;
+                    }
+
+                    AddLoopPathNodes(addNodes, allLoopPathNodes);
 
                     SetPathfindedTileAspects(allLoopPathNodes);
 
@@ -334,8 +352,17 @@ namespace DreamingDeep
                 }
                 else
                 {
-                    // Check if it can still pathfind to goal even if goal cant be reached cuz it itself has looppathaspect
-                    AddLoopPathNodes(Pathfinding.Instance.FindPath(randomLoopPathNodes[j], randomLoopPathNodes[0]), allLoopPathNodes);
+                    Pathfinding.Instance.GetNode(allLoopPathNodes[0].x, allLoopPathNodes[0].y).SetIsWalkable(true);
+
+                    List<PathNode> addNodes = Pathfinding.Instance.FindPath(randomLoopPathNodes[j], randomLoopPathNodes[0]);
+
+                    if (addNodes == null)
+                    {
+                        GenerateRandomLoopPath();
+                        return;
+                    }
+
+                    AddLoopPathNodes(addNodes, allLoopPathNodes);
 
                     SetPathfindedTileAspects(allLoopPathNodes);
 
