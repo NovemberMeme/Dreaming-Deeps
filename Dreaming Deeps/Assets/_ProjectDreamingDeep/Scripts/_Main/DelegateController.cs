@@ -14,5 +14,8 @@ namespace DreamingDeep
 
         public delegate Party GetOpposingParty(PartyCharacter _partyChar);
         public static GetOpposingParty getOpposingParty;
+
+        public delegate Grid<WorldTileObject> GetWorldTileGrid();
+        public static GetWorldTileGrid getWorldTileGrid;
     }
 }

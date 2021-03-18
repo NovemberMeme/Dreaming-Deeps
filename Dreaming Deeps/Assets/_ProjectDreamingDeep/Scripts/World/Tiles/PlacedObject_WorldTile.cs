@@ -7,9 +7,7 @@ namespace DreamingDeep
     public class PlacedObject_WorldTile : PlacedObject_Done
     {
         [SerializeField] protected PlacedWorldTileTypeSO placedWorldTileTypeSO;
-
-        [SerializeField] protected GameObject DefaultVisuals;
-
+ 
         [SerializeField] protected List<TileVisual> MyVisuals = new List<TileVisual>();
 
         [SerializeField] protected List<TileAspect> myAspects = new List<TileAspect>();
@@ -18,13 +16,13 @@ namespace DreamingDeep
         {
             get
             {
-                Debug.Log(myAspects.Count);
+                //Debug.Log(myAspects.Count);
                 return myAspects;
             }
             set
             {
                 myAspects = value;
-                Debug.Log(myAspects.Count);
+                //Debug.Log(myAspects.Count);
             }
         }
 

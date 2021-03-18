@@ -65,6 +65,7 @@ namespace DreamingDeep
         #region Fields and Properties
 
         public ThingRuntimeSet tileRuntimeSet;
+        public ThingRuntimeSet loopPathTileSet;
 
         public static GridBuildingSystem2D _Instance { get; private set; }
 
@@ -104,6 +105,16 @@ namespace DreamingDeep
             InitializeWorldTiles();
         }
 
+        protected virtual void OnEnable()
+        {
+            DelegateController.getWorldTileGrid += GetWorldTileGrid;
+        }
+
+        protected virtual void OnDisable()
+        {
+            DelegateController.getWorldTileGrid -= GetWorldTileGrid;
+        }
+
         protected override void Update()
         {
             CheckMouseInput();
@@ -117,6 +128,11 @@ namespace DreamingDeep
         #endregion
 
         #region Build System Code
+
+        protected virtual Grid<WorldTileObject> GetWorldTileGrid()
+        {
+            return _grid;
+        }
 
         protected virtual void InitializeGrid()
         {
@@ -317,6 +333,7 @@ namespace DreamingDeep
 
         public virtual void GenerateRandomLoopPath()
         {
+            loopPathTileSet.Items.Clear();
             DeleteAllTileAspects();
             Vector2Int randomLoopSize = GenerateRandomLoopSize();
             Vector2Int maxLoopPlacementRange = new Vector2Int(DB.GridWidth - randomLoopSize.x - 1, DB.GridHeight - randomLoopSize.y - 1);
@@ -387,7 +404,12 @@ namespace DreamingDeep
             {
                 Vector2Int toAdd = new Vector2Int(_pathNodes[i].x, _pathNodes[i].y);
                 if (!_allPathNodes.Contains(toAdd))
+                {
                     _allPathNodes.Add(toAdd);
+                    PlacedObject_WorldTile currentTileObject = _grid.GetGridObject(toAdd.x, toAdd.y).GetPlacedObject();
+                    Thing nodeThing = currentTileObject.GetComponent<Thing>();
+                    loopPathTileSet.Items.Add(nodeThing);
+                }
             }
 
             return _allPathNodes;
