@@ -196,8 +196,9 @@ namespace DreamingDeep
             {
                 PlacedObject_WorldTile worldTile = tileRuntimeSet.Items[i].GetComponent<PlacedObject_WorldTile>();
                 worldTile.DeleteAspects();
-                Pathfinding.Instance.SetAllWalkable(true);
             }
+            
+            Pathfinding.Instance.SetAllWalkable(true);
         }
 
         public virtual void SetTileAspect(TileAspect _tileAspect, Vector3 _placePosition)

@@ -14,7 +14,19 @@ namespace DreamingDeep
 
         [SerializeField] protected List<TileAspect> myAspects = new List<TileAspect>();
 
-        public List<TileAspect> MyAspects { get => myAspects; set => myAspects = value; }
+        public List<TileAspect> MyAspects
+        {
+            get
+            {
+                Debug.Log(myAspects.Count);
+                return myAspects;
+            }
+            set
+            {
+                myAspects = value;
+                Debug.Log(myAspects.Count);
+            }
+        }
 
         public static PlacedObject_WorldTile Create(Transform _worldTileParent, List<TileAspect> _startingAspects, Vector3 worldPosition, Vector2Int origin, PlacedWorldTileTypeSO.Dir dir, PlacedWorldTileTypeSO _placedWorldTileTypeSO)
         {
@@ -48,17 +60,24 @@ namespace DreamingDeep
 
         public virtual void SetTileAspects(List<TileAspect> _newAspects)
         {
-            MyAspects = _newAspects;
+            //MyAspects = _newAspects;
+
+            MyAspects.Clear();
+
+            for (int i = 0; i < _newAspects.Count; i++)
+            {
+                MyAspects.Add(_newAspects[i]);
+            }
 
             UpdateAllVisuals();
         }
 
-        public virtual void SetTileAspects(List<TileAspect> _newAspects, int _loopPathIndex)
-        {
-            MyAspects = _newAspects;
+        //public virtual void SetTileAspects(List<TileAspect> _newAspects, int _loopPathIndex)
+        //{
+        //    MyAspects = _newAspects;
 
-            UpdateAllVisuals(_loopPathIndex);
-        }
+        //    UpdateAllVisuals(_loopPathIndex);
+        //}
 
         public virtual void AddTileAspects(List<TileAspect> _newAspects, int _loopPathIndex)
         {
@@ -73,13 +92,13 @@ namespace DreamingDeep
             UpdateAllVisuals(_loopPathIndex);
         }
 
-        public virtual void SetTileAspects(TileAspect _newAspect)
-        {
-            if (!MyAspects.Contains(_newAspect))
-                MyAspects.Add(_newAspect);
+        //public virtual void SetTileAspects(TileAspect _newAspect)
+        //{
+        //    if (!MyAspects.Contains(_newAspect))
+        //        MyAspects.Add(_newAspect);
 
-            UpdateAllVisuals();
-        }
+        //    UpdateAllVisuals();
+        //}
 
         protected virtual void HideAllVisuals()
         {
@@ -140,6 +159,8 @@ namespace DreamingDeep
         protected virtual void UpdateAllVisuals(int _loopPathIndex)
         {
             HideAllVisuals();
+
+            //Debug.Log(MyAspects.Count);
 
             for (int i = 0; i < MyAspects.Count; i++)
             {
